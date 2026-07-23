@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         FI - Toggle Dispatch Planner
-// @version      1.0.1
+// @version      1.0.2
 // @description  toggle visibility Dispatch Planner
 // @author       DrTraxx
 // @match        https://fracht-imperium.de/game/dispatch.php*
@@ -27,7 +27,7 @@
 
             e.target.classList.add('legend-loaded');
             e.target.classList.remove('legend-pause');
-            e.target.innerText = 'Aufträge anzeigen';
+            e.target.innerText = 'Aufträge einblenden';
         } else {
 
             e.target.classList.add('legend-pause');
