@@ -1,9 +1,9 @@
 // ==UserScript==
 // @name         FI - Toggle Dispatch Planner
-// @version      1.0.0
+// @version      1.0.1
 // @description  toggle visibility Dispatch Planner
 // @author       DrTraxx
-// @match        https://fracht-imperium.de/game/dispatch.php
+// @match        https://fracht-imperium.de/game/dispatch.php*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=fracht-imperium.de
 // @grant        GM_addStyle
 // ==/UserScript==
