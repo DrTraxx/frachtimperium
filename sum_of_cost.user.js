@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         FI - Sum of Cost
-// @version      1.0.0
+// @version      1.1.0
 // @description  Sum of all Cost for next month
 // @author       DrTraxx
 // @match        https://fracht-imperium.de/game/bank.php*
@@ -15,6 +15,8 @@
           costsCredit = parseFloat(document.getElementById('kreditraten')?.children[1]?.children[0]?.children[1]?.children[0]?.children[3]?.textContent?.replace(/\D+/g, '') / 100) || 0;
 
     let nextRateLeasing = 0;
+
+    document.getElementsByClassName('stat-card')[3].style.display = 'none';
 
     for (const tr of document.getElementById('leasing').getElementsByTagName('tr')) {
         if (tr.firstElementChild.localName === 'th' || tr.outerHTML.includes('bezahlt')) {
