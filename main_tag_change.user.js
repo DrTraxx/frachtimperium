@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         FI - Main Page Tag Change
-// @version      1.1.0
+// @version      1.1.1
 // @description  Change Tags on Main Page to Links
 // @author       DrTraxx
 // @match        https://fracht-imperium.de/game/*
@@ -36,6 +36,7 @@
     helpBadge.innerText = 'Hilfe';
     helpBadge.className = 'fi-stat-badge';
     helpBadge.href = 'https://hilfe.frachtimperium.de';
+    helpBadge.target = '_blank';
 
     personalBadge.parentNode.appendChild(dispatchBadge);
     personalBadge.parentNode.appendChild(tourBadge);
