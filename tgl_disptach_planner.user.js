@@ -1,14 +1,15 @@
 // ==UserScript==
 // @name         FI - Toggle Dispatch Planner
-// @version      1.1.0
+// @version      1.1.1
 // @description  toggle visibility Dispatch Planner
 // @author       DrTraxx
 // @match        https://fracht-imperium.de/game/dispatch.php*
+// @match        https://frachtimperium.de/game/dispatch.php*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=fracht-imperium.de
 // @grant        GM_addStyle
 // ==/UserScript==
 
-(function() {
+(function () {
     'use strict';
 
     GM_addStyle(`
@@ -39,8 +40,8 @@
     `);
 
     const toggleBtn = document.createElement('a'),
-          timelineElement = document.getElementsByClassName('timeline-legend')[0],
-          plannerElement = document.getElementsByClassName('orders-floating')[0];
+        timelineElement = document.getElementsByClassName('timeline-legend')[0],
+        plannerElement = document.getElementsByClassName('orders-floating')[0];
 
     function plannerClassToggle (e) {
 

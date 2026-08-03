@@ -1,10 +1,12 @@
 // ==UserScript==
 // @name         FI - Select Finishing Target
-// @version      1.0.1
+// @version      1.0.2
 // @description  Select Finishing Target as Start - PREMIUM ONLY
 // @author       DrTraxx
 // @match        https://fracht-imperium.de/game/freight-market.php*
+// @match        https://frachtimperium.de/game/freight-market.php*
 // @match        https://fracht-imperium.de/game/subcontract_market.php*
+// @match        https://frachtimperium.de/game/subcontract_market.php*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=fracht-imperium.de
 // @grant        none
 // ==/UserScript==
