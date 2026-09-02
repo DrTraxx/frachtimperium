@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         FI - Select Finishing Target
-// @version      1.0.4
+// @version      1.1.0
 // @description  Select Finishing Target as Start - PREMIUM ONLY
 // @author       DrTraxx
 // @match        https://fracht-imperium.de/game/freight-market.php*
@@ -25,6 +25,22 @@
 
     const typeExpr = /(?:Fahrer\n\s+)(?<type>.+)/gm,
         finishExpr = /(?:Endet am\n\s+)(?<date>(?<d>\d\d)\.(?<m>\d\d)\.(?<y>\d\d\d\d))(?:\s)(?<time>\d\d:\d\d)(?:\sin\s)(?<place>.+)/gm;
+
+    function switchType (type) {
+        switch (type) {
+            case "Plane": return "curtain";
+            case "Tanker": return "food_tanker";
+            case "Solo Kühler": return "refrigerated_box";
+            case "Plane": return "box";
+            // case "Plane": return "hazmat_tanker";
+            case "Kipper": return "grain_tipper";
+            case "Container": return "container_chassis";
+            case "Transporter": return "van";
+            case "Kühler": return "refrigerated_box";
+            case "Solo LKW": return "box";
+            default: return "";
+        }
+    }
 
     const divElem = document.createElement('div');
 
@@ -63,9 +79,9 @@
             finishPlace = match.groups.place ? match.groups.place : document.getElementsByClassName('fi-mini-pill')[0].getElementsByTagName('strong')[0].textContent;
         }
 
-
         insertOption.value = finishPlace.replace(/\s\w\w$/gm, '');
         insertOption.innerText = `${ cardTitle } (${ type }), ${ finishPlace } (${ finishDate }, ${ finishTime } Uhr)`;
+        insertOption.setAttribute('vehicletype', switchType(type));
 
         document.getElementById('dt_fi_sel_finish').appendChild(insertOption);
     }
@@ -78,7 +94,13 @@
         if (newMaxDistance) localStorage.fi_dt_selMaxDistance = +newMaxDistance || 20;
     }
 
-    document.getElementById('dt_fi_sel_finish').addEventListener('change', function (e) { document.getElementById('start_radius_city').value = e.target.value; document.getElementById('start_radius_km').value = e.target.value ? +localStorage.fi_dt_selMaxDistance || 20 : ''; });
+    function changeValues (e) {
+        document.getElementById('start_radius_city').value = e.target.value;
+        document.getElementById('start_radius_km').value = e.target.value ? +localStorage.fi_dt_selMaxDistance || 20 : '';
+        document.getElementById('body_type').value = e.target.selectedOptions[0]?.attributes?.vehicletype?.value || '';
+    }
+
+    document.getElementById('dt_fi_sel_finish').addEventListener('change', changeValues);
     document.getElementById('dt_fi_set_max_distance').addEventListener('click', changeMaxDistance);
 
 })();
