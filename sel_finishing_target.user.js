@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         FI - Select Finishing Target
-// @version      1.1.0
+// @version      1.1.1
 // @description  Select Finishing Target as Start - PREMIUM ONLY
 // @author       DrTraxx
 // @match        https://fracht-imperium.de/game/freight-market.php*
@@ -32,7 +32,7 @@
             case "Tanker": return "food_tanker";
             case "Solo Kühler": return "refrigerated_box";
             case "Plane": return "box";
-            // case "Plane": return "hazmat_tanker";
+            case "Gefahrgut": return "hazmat_tanker";
             case "Kipper": return "grain_tipper";
             case "Container": return "container_chassis";
             case "Transporter": return "van";
