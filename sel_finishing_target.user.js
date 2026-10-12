@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         FI - Select Finishing Target
-// @version      1.1.1
+// @version      1.1.2
 // @description  Select Finishing Target as Start - PREMIUM ONLY
 // @author       DrTraxx
 // @match        https://fracht-imperium.de/game/freight-market.php*
@@ -64,12 +64,12 @@
             type = match.groups.type;
         }
 
-        if (finishRawTxt.includes('Frei ab')) {
+        if (finishRawTxt.includes('Frei ab') || finishRawTxt.includes('gesperrt')) {
             const now = new Date();
 
             finishDate = now.toLocaleDateString('de-DE', { 'month': '2-digit', 'day': '2-digit', 'year': 'numeric' });
             finishTime = now.toLocaleTimeString('de-DE', { 'hour': '2-digit', 'minute': '2-digit' });
-            finishPlace = finishRawTxt.match(/jetzt\sin.+/g)[0].replace('jetzt in ', '').trim();
+            finishPlace = finishRawTxt.includes('Frei ab') ? finishRawTxt.match(/jetzt\sin.+/g)[0].replace('jetzt in ', '').trim() : 'GESPERRT';
 
         }
 
@@ -98,6 +98,7 @@
         document.getElementById('start_radius_city').value = e.target.value;
         document.getElementById('start_radius_km').value = e.target.value ? +localStorage.fi_dt_selMaxDistance || 20 : '';
         document.getElementById('body_type').value = e.target.selectedOptions[0]?.attributes?.vehicletype?.value || '';
+        document.getElementById('sort').value = 'distance_desc';
     }
 
     document.getElementById('dt_fi_sel_finish').addEventListener('change', changeValues);

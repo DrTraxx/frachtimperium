@@ -1,9 +1,10 @@
 // ==UserScript==
 // @name         FI - Main Page Tag Change
-// @version      1.1.1
+// @version      1.2.0
 // @description  Change Tags on Main Page to Links
 // @author       DrTraxx
 // @match        https://fracht-imperium.de/game/*
+// @match        https://frachtimperium.de/game/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=fracht-imperium.de
 // @grant        none
 // ==/UserScript==
@@ -23,23 +24,28 @@
         miniPill = document.getElementsByClassName("fi-mini-pill")[0],
         dispatchBadge = document.createElement('a'),
         tourBadge = document.createElement('a'),
-        helpBadge = document.createElement('a');
+        helpBadge = document.createElement('a'),
+        workshopBadge = document.createElement('a');
 
     dispatchBadge.innerText = 'Disposition';
     dispatchBadge.className = 'fi-stat-badge';
-    dispatchBadge.href = 'https://fracht-imperium.de/game/dispatch.php';
+    dispatchBadge.href = 'https://frachtimperium.de/game/dispatch.php';
 
     tourBadge.innerText = 'Tourenplaner';
     tourBadge.className = 'fi-stat-badge';
-    tourBadge.href = 'https://fracht-imperium.de/game/tour-planner.php';
+    tourBadge.href = 'https://frachtimperium.de/game/tour-planner.php';
 
-    helpBadge.innerText = 'Hilfe';
+    workshopBadge.innerText = 'Werkstatt';
+    workshopBadge.className = 'fi-stat-badge';
+    workshopBadge.href = 'https://frachtimperium.de/game/workshop.php';
+
+    helpBadge.innerText = 'Büro';
     helpBadge.className = 'fi-stat-badge';
-    helpBadge.href = 'https://hilfe.frachtimperium.de';
-    helpBadge.target = '_blank';
+    helpBadge.href = 'https://frachtimperium.de/game/office.php';
 
     personalBadge.parentNode.appendChild(dispatchBadge);
     personalBadge.parentNode.appendChild(tourBadge);
+    personalBadge.parentNode.appendChild(workshopBadge);
     personalBadge.parentNode.appendChild(helpBadge);
 
 
@@ -48,18 +54,18 @@
 
         newTag.innerHTML = elem.innerHTML;
         newTag.classList = elem.classList;
-        newTag.href = `https://fracht-imperium.de/game/${ href }.php`;
+        newTag.href = `https://frachtimperium.de/game/${ href }.php`;
 
         elem.parentNode.replaceChild(newTag, elem);
     }
 
-    changeTag(fameBadge, "agency");
+    // changeTag(fameBadge, "agency");
     changeTag(levelBadge, "company-site");
     changeTag(vehicleBadge, "fuhrpark");
     changeTag(trailerBadge, "fuhrpark");
     changeTag(personalBadge, "staff");
-    changeTag(companyBadge, "office");
-    changeTag(moneyBadge, "bank");
+    // changeTag(companyBadge, "office");
+    // changeTag(moneyBadge, "bank");
     if (timerBadge) changeTag(timerBadge, "company-site");
     changeTag(miniPill, "pc");
 
