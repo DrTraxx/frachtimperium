@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         FI - Select Finishing Target
-// @version      1.1.2
+// @version      1.2.0
 // @description  Select Finishing Target as Start - PREMIUM ONLY
 // @author       DrTraxx
 // @match        https://fracht-imperium.de/game/freight-market.php*
@@ -22,9 +22,6 @@
             const doc = new DOMParser().parseFromString(html, "text/html");
             return doc.getElementsByClassName('vehicle-overview-card');
         });
-
-    const typeExpr = /(?:Fahrer\n\s+)(?<type>.+)/gm,
-        finishExpr = /(?:Endet am\n\s+)(?<date>(?<d>\d\d)\.(?<m>\d\d)\.(?<y>\d\d\d\d))(?:\s)(?<time>\d\d:\d\d)(?:\sin\s)(?<place>.+)/gm;
 
     function switchType (type) {
         switch (type) {
@@ -50,38 +47,36 @@
     document.getElementsByClassName('filter-grid')[0].appendChild(divElem);
 
     for (const card of vehicleCards) {
+        console.log(card);
 
-        const typeRawTxt = card.children[2].innerText,
-            finishRawTxt = card.children[3].innerText,
-            typeMatches = typeRawTxt.matchAll(typeExpr),
-            finishMatches = finishRawTxt.matchAll(finishExpr),
-            cardTitle = card.children[1].innerText.trim(),
-            insertOption = document.createElement('option');
+        const licensePlate = card.querySelector('.vehicle-overview-plate').innerText.trim();
+        const vehicleName = card.querySelector('.vehicle-title-name').innerText.trim();
+        const vehicleType = card.querySelector('.vehicle-carrier-chip').innerText.trim();
+        const vehicleDispoStatus = card.querySelector('.availability-kicker').innerText.trim();
+        const vehicleEndStatus = card.querySelector('.availability-value').innerText.trim().split('\n');
+        const vehicleAutomaticStatus = card.querySelector('.vehicle-automatic-badge') !== null;
+        const insertOption = document.createElement('option');
 
-        let type, finishDate, finishTime, finishPlace;
+        if (vehicleDispoStatus === "gesperrt" || vehicleAutomaticStatus === true) continue;
 
-        for (const match of typeMatches) {
-            type = match.groups.type;
-        }
+        const finishPlace = vehicleEndStatus[1].trim();
 
-        if (finishRawTxt.includes('Frei ab') || finishRawTxt.includes('gesperrt')) {
+        let finishDate, finishTime;
+
+        if (vehicleDispoStatus === "Frei ab") {
             const now = new Date();
 
             finishDate = now.toLocaleDateString('de-DE', { 'month': '2-digit', 'day': '2-digit', 'year': 'numeric' });
             finishTime = now.toLocaleTimeString('de-DE', { 'hour': '2-digit', 'minute': '2-digit' });
-            finishPlace = finishRawTxt.includes('Frei ab') ? finishRawTxt.match(/jetzt\sin.+/g)[0].replace('jetzt in ', '').trim() : 'GESPERRT';
-
-        }
-
-        for (const match of finishMatches) {
-            finishDate = match.groups.date;
-            finishTime = match.groups.time;
-            finishPlace = match.groups.place ? match.groups.place : document.getElementsByClassName('fi-mini-pill')[0].getElementsByTagName('strong')[0].textContent;
+        } else {
+            const splittedEndStatus = vehicleEndStatus[0].split(' ');
+            finishDate = splittedEndStatus[0];
+            finishTime = splittedEndStatus[1];
         }
 
         insertOption.value = finishPlace.replace(/\s\w\w$/gm, '');
-        insertOption.innerText = `${ cardTitle } (${ type }), ${ finishPlace } (${ finishDate }, ${ finishTime } Uhr)`;
-        insertOption.setAttribute('vehicletype', switchType(type));
+        insertOption.innerText = `"${ vehicleName }" - ${ licensePlate } (${ vehicleType }), ${ finishPlace } (${ finishDate }, ${ finishTime } Uhr)`;
+        insertOption.setAttribute('vehicletype', switchType(vehicleType));
 
         document.getElementById('dt_fi_sel_finish').appendChild(insertOption);
     }
