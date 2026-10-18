@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         FI - Select Finishing Target
-// @version      1.2.0
+// @version      1.2.1
 // @description  Select Finishing Target as Start - PREMIUM ONLY
 // @author       DrTraxx
 // @match        https://fracht-imperium.de/game/freight-market.php*
@@ -59,7 +59,7 @@
 
         if (vehicleDispoStatus === "gesperrt" || vehicleAutomaticStatus === true) continue;
 
-        const finishPlace = vehicleEndStatus[1].trim();
+        const finishPlace = vehicleEndStatus[1].replace('in', '').trim();
 
         let finishDate, finishTime;
 
