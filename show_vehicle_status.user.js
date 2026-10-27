@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         FI - Show Vehicle Status
-// @version      1.0.0
+// @version      1.1.0
 // @description  Shows usage percentage on dispatch
 // @author       DrTraxx
 // @match        https://fracht-imperium.de/game/dispatch.php*
@@ -42,7 +42,13 @@
         usageElem.innerText = vehicleStatus;
 
         card.querySelector('.vehicle-overview-plate').after(usageElem);
+    }
 
-        console.log(vehicleStatus);
+    for (const node of document.querySelectorAll('.availability-value')) {
+        if (node.textContent.includes('HU-Prüfer')) {
+            node.textContent = 'Fahrzeug/ Anhänger/ Auflieger beim TÜV';
+        } else if (node.textContent.includes('Fahrzeug nicht fahrbereit')) {
+            node.textContent = 'Werkstatt/ defekt';
+        }
     }
 })();
