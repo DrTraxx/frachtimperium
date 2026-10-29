@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         FI - Show Vehicle Status
-// @version      1.1.0
+// @version      1.2.0
 // @description  Shows usage percentage on dispatch
 // @author       DrTraxx
 // @match        https://fracht-imperium.de/game/dispatch.php*
@@ -35,11 +35,19 @@
     for (const card of dispatchCards) {
         const id = card.dataset.href.split('vehicle_id=')[1];
         const vehicleStatus = vehicleCards[id].percentage;
+        const numPercentage = +vehicleStatus.replace('%', '').replace(',', '.');
 
         const usageElem = document.createElement('span');
         usageElem.classList.add('vehicle-overview-plate');
         usageElem.title = 'aktueller Fahrzeugverschleiß';
         usageElem.innerText = vehicleStatus;
+
+        if (numPercentage <= 40 && numPercentage > 35) {
+            usageElem.style.cssText = 'color: orange !important';
+        }
+        if (numPercentage <= 35) {
+            usageElem.style.cssText = 'color: red !important';
+        }
 
         card.querySelector('.vehicle-overview-plate').after(usageElem);
     }
