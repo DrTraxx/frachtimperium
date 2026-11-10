@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         FI - Select Finishing Target
-// @version      1.2.2
+// @version      1.2.3
 // @description  Select Finishing Target as Start - PREMIUM ONLY
 // @author       DrTraxx
 // @match        https://fracht-imperium.de/game/freight-market.php*
@@ -48,13 +48,12 @@
     document.getElementsByClassName('filter-grid')[0].appendChild(divElem);
 
     for (const card of vehicleCards) {
-        console.log(card);
 
         const licensePlate = card.querySelector('.vehicle-overview-plate').innerText.trim();
         const vehicleName = card.querySelector('.vehicle-title-name').innerText.trim();
         const vehicleType = card.querySelector('.vehicle-carrier-chip').innerText.trim();
-        const vehicleDispoStatus = card.querySelector('.availability-kicker').innerText.trim();
-        const vehicleEndStatus = card.querySelector('.availability-value').innerText.trim().split('\n');
+        const vehicleDispoStatus = card.querySelector('.availability-kicker')?.innerText?.trim();
+        const vehicleEndStatus = card.querySelector('.availability-value')?.innerText?.trim()?.split('\n');
         const vehicleAutomaticStatus = card.querySelector('.vehicle-automatic-badge') !== null;
         const insertOption = document.createElement('option');
 
