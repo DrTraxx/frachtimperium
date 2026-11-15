@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         FI - Select Finishing Target
-// @version      1.2.3
+// @version      1.2.4
 // @description  Select Finishing Target as Start - PREMIUM ONLY
 // @author       DrTraxx
 // @match        https://fracht-imperium.de/game/freight-market.php*
@@ -25,17 +25,25 @@
 
     function switchType (type) {
         switch (type) {
-            case "Plane": return "curtain";
-            case "Tanker": return "food_tanker";
-            case "Solo Kühler": return "refrigerated_box";
-            case "UNBEKANNTER TAG": return "box";
-            case "Gefahrgut": return "hazmat_tanker";
-            case "Kipper": return "grain_tipper";
-            case "Container": return "container_chassis";
-            case "Transporter": return "van";
-            case "Kühler": return "refrigerated_box";
-            case "Solo LKW": return "box";
-            case "Autotransporte": return "car_transporter";
+            case "Plane":
+                return "curtain";
+            case "Tanker":
+                return "food_tanker";
+            case "Solo Kühler":
+            case "Kühler":
+                return "refrigerated_box";
+            case "Gefahrgut":
+                return "hazmat_tanker";
+            case "Kipper":
+                return "grain_tipper";
+            case "Container":
+                return "container_chassis";
+            case "Transporter":
+                return "van";
+            case "Solo LKW":
+                return "box";
+            case "Autotransporte":
+                return "car_transporter";
             default: return "";
         }
     }
@@ -52,12 +60,12 @@
         const licensePlate = card.querySelector('.vehicle-overview-plate').innerText.trim();
         const vehicleName = card.querySelector('.vehicle-title-name').innerText.trim();
         const vehicleType = card.querySelector('.vehicle-carrier-chip').innerText.trim();
-        const vehicleDispoStatus = card.querySelector('.availability-kicker')?.innerText?.trim();
+        const vehicleDispoStatus = card.querySelector('.badge.danger')?.innerText?.trim();
         const vehicleEndStatus = card.querySelector('.availability-value')?.innerText?.trim()?.split('\n');
         const vehicleAutomaticStatus = card.querySelector('.vehicle-automatic-badge') !== null;
         const insertOption = document.createElement('option');
 
-        if (vehicleDispoStatus === "gesperrt" || vehicleAutomaticStatus === true) continue;
+        if (vehicleDispoStatus === "Fahrzeug gesperrt" || vehicleAutomaticStatus === true || !vehicleEndStatus) continue;
 
         const finishPlace = vehicleEndStatus[1].replace('in', '').trim();
 
